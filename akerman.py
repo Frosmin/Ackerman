@@ -1,4 +1,4 @@
-# import time 
+# import time
 # import tracemalloc
 
 # def ackermann(m, n):
@@ -9,40 +9,42 @@
 #     elif m > 0 and n > 0:
 #         return ackermann(m - 1, ackermann(m, n - 1))
     
-    
 # tracemalloc.start()
-# inicio = time.time()
-# resultado = ackermann(3, 6)
-# fin = time.time()
-
-
+# inicio = time.perf_counter()  # Más preciso que time.time()
+# resultado = ackermann(0, 10)
+# fin = time.perf_counter()
 
 # memoria_actual, memoria_pico = tracemalloc.get_traced_memory()
-
 # tracemalloc.stop()
 
 # print(f"Resultado: {resultado}")
-# print(f"Tiempo de ejecución: {fin - inicio} segundos")
+# print(f"Tiempo de ejecución: {fin - inicio:.10f} segundos")
 # print(f"Pico de uso de memoria: {memoria_pico / 10**6} MB")
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Simulando los tiempos de ejecución para diferentes valores de m, n en Python y C++
-m_values = [1, 2, 3, 4, 5, 6]
-# Estos tiempos están simulados; debes ejecutar el código real para obtener los tiempos exactos
-tiempos_python = [0.01, 0.05, 0.25, 1.5, 7.8, 40.0]  # Tiempos de ejecución en Python
-tiempos_cpp = [0.005, 0.02, 0.12, 0.7, 3.6, 15.0]    # Tiempos de ejecución en C++ (simulados)
+# Datos para Python (4 valores)
+m_values_python = [1, 2, 3, 4]
+tiempos_python = [0.00000140, 0.0000050, 0.00018, 0.096]
 
-plt.plot(m_values, tiempos_python, label='Python', marker='o', color='blue')
-plt.plot(m_values, tiempos_cpp, label='C++', marker='s', color='green')
+# Datos para C++ (6 valores)
+m_values_cpp = [1, 2, 3, 4, 5]
+tiempos_cpp = [0.000001, 0.000001, 0.000001, 0.000001, 1.4]  # Usando valores muy pequeños en lugar de 0
+
+plt.figure(figsize=(10, 6))
+
+# Graficar Python hasta donde hay datos
+plt.plot(m_values_python, tiempos_python, label='Python', marker='o', color='blue')
+# Graficar C++ completo
+plt.plot(m_values_cpp, tiempos_cpp, label='C++', marker='s', color='green')
 
 plt.xlabel('Valor de m')
 plt.ylabel('Tiempo de ejecución (segundos)')
 plt.title('Comparación de Tiempos de Ejecución: Ackermann en Python vs C++')
 plt.legend()
 plt.grid(True)
+plt.yscale('log')  # Escala logarítmica para mejor visualización
 
-# Guardar la gráfica como un archivo PNG
 plt.savefig('comparacion_tiempos_ackermann.png')
 plt.show()
